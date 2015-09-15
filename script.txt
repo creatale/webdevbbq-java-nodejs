@@ -1,0 +1,44 @@
+Use Case:
+node-dv, ZXing
+bisher: offizieller C++-Port, wurde aber eingestellt
+existierende C++-Ports xx Jahre nicht mehr aktualisiert
+=> Was jetzt?
+
+Anforderungen: ohne viel Aufwand aktuell halten, Plattform "unabhängig" (min. Windows und Linux), vernünftige API (muss mit Buffern umgehen können, nicht nur Dateien), gute Performance
+
+1. exec java (nur public static void main(String[] args) als entry points)
+	- spawn
+	- node-jvm
+	- client-server
+2. java to c/c++
+	- j2c (Google!, Java 1.6, Eclipse Plugin, Fehler beim Kompilieren, Dependencies müssen per Hand implementiert werden) https://bitbucket.org/arnetheduck/j2c
+	- xmlvm (Probleme mit java.nio.{Paths|Files|DirectoryStream}) http://xmlvm.org/overview/
+	- Tangible (kostet Geld, Free Version nicht ausreichend (max. 100 Zeilen)) http://www.tangiblesoftwaresolutions.com/Product_Details/CPlusPlus_to_Java_Converter_Details.html
+	- Java2C (2011, keine Generics, eigentlich für embeded) http://sourceforge.net/projects/java2c/
+	- JCGO (Java 1.4) http://www.ivmaisoft.com/jcgo/
+	- GCJ (2009, Java 1.4 + X) http://gcc.gnu.org/java/
+	- Toba (1999, Java 1.2) http://www.cs.arizona.edu/projects/sumatra/toba/
+	- XES (manuelles übersetzen der class library Importe per Symboltabelle) http://www.euclideanspace.com/software/language/xes/userGuide/convert/javaToCpp/index.htm
+3. JNI (java) https://github.com/joeferner/node-java
+	- jeder Funktionsaufruf ein Callback
+	- Probleme mit Speicherverwaltung, warten auf GC macht Performance kaputt
+4. java to Javascript
+	- xmlvm (benutzt Qooxdoo, nur im Browser verfügbar) http://xmlvm.org/overview/
+	- Java2Script/J2S (Projektstatus unübersichtlich, kompilierter Code fehlerhaft, div. java.nio fehlt)
+		- https://groups.google.com/forum/#!msg/java2script/g-S1HibShSA/aaz34BcLlZcJ
+		- https://github.com/zhourenjian/java2script
+		- https://code.google.com/p/java2script/
+		- https://groups.google.com/forum/#!forum/java2script
+	- GWT (Google!, Web Applications, braucht explizite Unterstützung (Modul), leider bei ZXing nicht vorhanden) http://www.gwtproject.org
+	- GWT Exporter (Änderungen am Quellcode nötig, @Export, implements Exportable) https://code.google.com/p/gwt-exporter/
+	- Kotlin (Java -> Kotlin -> Javascript, Fehler beim Kompilieren nach JS) http://kotlinlang.org
+5. java to c# + node-edge
+	- sharpen (kann keine Mehrdimensionalen Arrays) https://github.com/mono/sharpen
+	- Tangible (kostet Geld, Free Version nicht ausreichend (max. 100 Zeilen)) http://www.tangiblesoftwaresolutions.com/Product_Details/Java_to_CSharp_Converter.html
+	- XES (manuelles übersetzen der class library Importe per Symboltabelle) http://www.euclideanspace.com/software/language/xes/userGuide/convert/javaToCSharp/index.htm
+	- Octopus (kostet Geld, Testübersetzung funktioniert nicht) http://www.remotesoft.com/octopus/
+	- Java Language Conversion Assistant 2.0 (gibts nicht mehr) http://www.microsoft.com/en-us/download/details.aspx?id=14349
+	- VaryCode (kostet Geld, kostenlose Version erlaubt nur 2048 Zeichen) https://www.varycode.com
+Lösung:	
+	- xmlvm (jar zu .NET-dll + node-edge and IKVM) http://xmlvm.org/overview/
+	
